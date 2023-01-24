@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+
+  webserver:
+    container_name: nginx
+    build: ./requirements/nginx
+    restart: always
+    networks:
+      - frontend
+    ports:
+      - "443:443/tcp"
+    volumes:
+      - type: volume
+        source: wordpress
+        target: /var/www/html/wordpress
+        read_only: true
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    restart: always
+    networks:
+      - frontend
+      - backend
+    expose:
+      - "9000"
+    volumes:
+      - type: volume
+        source: wordpress
+        target: /var/www/html/wordpress
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_HOSTNAME: $MYSQL_HOSTNAME
+
+  database:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    restart: always
+    networks:
+      - backend
+    expose:
+      - "3306"
+    volumes:
+      - type: volume
+        source: database
+        target: /var/lib/mysql
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+
+volumes:
+
+  wordpress:
+    name: wp
+    driver: local
+    driver_opts:
+      o: bind
+      device: /home/${USER}/data/wp
+      type: none
+
+  database:
+    name: db
+    driver: local
+    driver_opts:
+      o: bind
+      device: /home/${USER}/data/db
+      type: none
+
+networks:
+
+  frontend:
+    name: frontend
+    driver: bridge
+
+  backend:
+    name: backend
+    driver: bridge
