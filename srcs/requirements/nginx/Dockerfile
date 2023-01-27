@@ -6,4 +6,4 @@ RUN			apk add --no-cache nginx && \
 COPY		tools /etc/nginx/ssl
 COPY		conf/nosterme.42.fr.conf /etc/nginx/http.d/nosterme.42.fr.conf
 
-RUN			["/usr/sbin/nginx", "-g", "daemon off;"]
+CMD			["/usr/sbin/nginx", "-g", "daemon off;"]
