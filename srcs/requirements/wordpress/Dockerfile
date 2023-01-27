@@ -1,7 +1,6 @@
 FROM		alpine:3.16
 
-RUN			adduser -S -D -H -u 82 -h /var/www \
-					-s /sbin/nologin -G www-data -g www-data www-data && \
+RUN			addgroup -S nginx && adduser -S -G nginx nginx && \
 			apk add --no-cache wget tar mariadb-client php8-fpm && \
 			mkdir -p /var/www/html && \
 			rm -rf /etc/php8/php-fpm.d/*
