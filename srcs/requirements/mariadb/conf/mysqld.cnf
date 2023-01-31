@@ -4,6 +4,7 @@ user=mysql
 basedir=/usr
 datadir=/var/lib/mysql
 pid_file=/var/lib/mysql/mysqld.pid
+socket=/var/lib/mysql/mysqld.sock
 port=3306
 skip_networking=0
 bind_address=127.0.0.1

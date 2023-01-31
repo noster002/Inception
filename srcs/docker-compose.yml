@@ -4,7 +4,7 @@ services:
 
   webserver:
     container_name: nginx
-    build: ./requirements/nginx
+    build: ./requirements/nginx/
     restart: always
     networks:
       - frontend
@@ -13,12 +13,12 @@ services:
     volumes:
       - type: volume
         source: wordpress
-        target: /var/www/html/wordpress
+        target: /var/www/html/wordpress/
         read_only: true
 
   wordpress:
     container_name: wordpress
-    build: ./requirements/wordpress
+    build: ./requirements/wordpress/
     restart: always
     networks:
       - frontend
@@ -28,7 +28,7 @@ services:
     volumes:
       - type: volume
         source: wordpress
-        target: /var/www/html/wordpress
+        target: /var/www/html/wordpress/
     env_file:
       - .env
     environment:
@@ -39,7 +39,7 @@ services:
 
   database:
     container_name: mariadb
-    build: ./requirements/mariadb
+    build: ./requirements/mariadb/
     restart: always
     networks:
       - backend
@@ -48,7 +48,7 @@ services:
     volumes:
       - type: volume
         source: database
-        target: /var/lib/mysql
+        target: /var/lib/mysql/
     env_file:
       - .env
     environment:
@@ -64,7 +64,7 @@ volumes:
     driver: local
     driver_opts:
       o: bind
-      device: /home/${USER}/data/wp
+      device: /home/${USER}/data/wp/
       type: none
 
   database:
@@ -72,7 +72,7 @@ volumes:
     driver: local
     driver_opts:
       o: bind
-      device: /home/${USER}/data/db
+      device: /home/${USER}/data/db/
       type: none
 
 networks:
