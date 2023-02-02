@@ -1,7 +1,7 @@
 FROM		alpine:3.16
 
 RUN			adduser -S -G www-data www-data && \
-			apk add --no-cache wget tar mariadb-client php8-fpm && \
+			apk add --no-cache wget tar mariadb-client php8-fpm php8-mysqli && \
 			mkdir -p /var/www/html && \
 			rm -rf /etc/php8/php-fpm.d/*
 
