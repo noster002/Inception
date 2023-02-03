@@ -18,7 +18,9 @@ services:
 
   wordpress:
     container_name: wordpress
-    build: ./requirements/wordpress/
+    build:
+      context: ./requirements/wordpress/
+      dockerfile: ./Dockerfile
     restart: always
     networks:
       - frontend
@@ -39,7 +41,9 @@ services:
 
   database:
     container_name: mariadb
-    build: ./requirements/mariadb/
+    build:
+      context: ./requirements/mariadb/
+      dockerfile: ./Dockerfile
     restart: always
     networks:
       - backend
