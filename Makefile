@@ -8,7 +8,7 @@ all:		up
 
 up:
 		$(MKDIR)
-		$(DOCKER) up --detach --build
+		$(DOCKER) up --build
 
 down:
 		$(DOCKER) down
