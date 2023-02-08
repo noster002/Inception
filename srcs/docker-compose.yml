@@ -4,7 +4,10 @@ services:
 
   webserver:
     container_name: nginx
-    build: ./requirements/nginx/
+    build:
+      context: ./requirements/nginx/
+      dockerfile: ./Dockerfile
+    image: nginx
     restart: always
     networks:
       - frontend
@@ -21,6 +24,7 @@ services:
     build:
       context: ./requirements/wordpress/
       dockerfile: ./Dockerfile
+    image: wordpress
     restart: always
     networks:
       - frontend
@@ -44,6 +48,7 @@ services:
     build:
       context: ./requirements/mariadb/
       dockerfile: ./Dockerfile
+    image: mariadb
     restart: always
     networks:
       - backend

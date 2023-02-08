@@ -7,31 +7,31 @@ then
 fi
 
 if [ -d /var/lib/mysql/mysql ]; then
-	echo '[mariadb] MySQL already initialized'
+	echo 'MySQL already initialized'
 else
-	echo '[mariadb] Initializing MySQL...'
+	echo 'Initializing MySQL...'
 
 	mkdir -p /var/lib/mysql
 	chown -R mysql:mysql /var/lib/mysql
 
 	mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
-	echo '[mariadb] Initialization successful'
+	echo 'Initialization successful'
 fi
 
 if [ -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
-	echo "[mariadb] MySQL database: $MYSQL_DATABASE already setup"
+	echo "MySQL database: $MYSQL_DATABASE already set up"
 else
-	echo "[mariadb] Setting up MySQL database: $MYSQL_DATABASE"
+	echo "Setting up MySQL database: $MYSQL_DATABASE"
 
-	echo "[mariadb] Changing MySQL root password to: $MYSQL_ROOT_PASSWORD"
+	echo "Changing MySQL root password to: $MYSQL_ROOT_PASSWORD"
 	
 	tempfile=`mktemp`
 	if [ ! -f "$tempfile" ]; then
 		return 1
 	fi
 
-	echo "[mariadb] Creating tempfile: $tempfile"
+	echo "Creating tempfile: $tempfile"
 	cat << EOF > $tempfile
 USE mysql;
 FLUSH PRIVILEGES;
@@ -42,17 +42,17 @@ DROP DATABASE IF EXISTS test;
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;
 EOF
 
-	echo "[mariadb] Creating database: $MYSQL_DATABASE"
+	echo "Creating database: $MYSQL_DATABASE"
 	echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" >> $tempfile
 
-	echo "[mariadb] Creating user: $MYSQL_USER with password: $MYSQL_PASSWORD"
+	echo "Creating user: $MYSQL_USER with password: $MYSQL_PASSWORD"
 	echo "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> $tempfile
 
 	echo "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';" >> $tempfile
 
 	echo "FLUSH PRIVILEGES;" >> $tempfile
 
-	echo "[mariadb] Applying changes by running tempfile: $tempfile in bootstrap mode"
+	echo "Applying changes by running tempfile: $tempfile in bootstrap mode"
 	/usr/bin/mysqld --user=mysql --bootstrap < $tempfile
 	rm -f $tempfile
 
@@ -62,5 +62,5 @@ fi
 
 sleep 5
 
-echo '[mariadb] Starting /usr/bin/mysqld process'
+echo 'Starting /usr/bin/mysqld process'
 exec "$@"
