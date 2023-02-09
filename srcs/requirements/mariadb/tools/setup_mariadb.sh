@@ -55,10 +55,10 @@ EOF
 	echo "Applying changes by running tempfile: $tempfile in bootstrap mode"
 	/usr/bin/mysqld --user=mysql --bootstrap < $tempfile
 	rm -f $tempfile
-
-	sed -i "s/skip-networking/#skip-networking/g" /etc/my.cnf.d/mariadb-server.cnf
-	echo "[mysqld]\nbind-address=0.0.0.0" >> /etc/my.cnf.d/mariadb-server.cnf
 fi
+
+sed -i "s/skip-networking/#skip-networking/g" /etc/my.cnf.d/mariadb-server.cnf
+echo "[mysqld]\nbind-address=0.0.0.0" >> /etc/my.cnf.d/mariadb-server.cnf
 
 sleep 5
 
