@@ -21,9 +21,9 @@ The project was set up on a virtual machine on Ubuntu to test it.
 + WordPress database
 + WordPress website files
 
-+ The volumes will be available in the `/home/<login>/data` folder of the host machine.
+The volumes will be available in the `/home/<login>/data` folder of the host machine.
 
 #### Network
 + Docker-network
 
-+ The NGINX container must be the only entrypoint into your infrastructure via the port 443
+The NGINX container must be the only entrypoint into your infrastructure via the port 443
